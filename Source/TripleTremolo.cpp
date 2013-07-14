@@ -50,25 +50,28 @@ void TripleTremolo::processBlock(AudioSampleBuffer& buffer, int numInputChannels
   float amt2 = getParameterValue(PARAMETER_AMT2);
   float amt3 = getParameterValue(PARAMETER_AMT3);
   
-  for (int channel=0; channel<numInputChannels; channel++)
-  {
-    float *buf = buffer.getSampleData(channel);
-    for (int i=0; i<buffer.getNumSamples(); i++) {
-      
-      float mod1 = sinf(2 * M_PI * phase1) / 2.0f + .5; // 0..1
-      float mod2 = sinf(2 * M_PI * phase2) / 2.0f + .5; // 0..1
-      float mod3 = sinf(2 * M_PI * phase3) / 2.0f + .5; // 0..1
+  float dryWet = getParameterValue(PARAMETER_DRYWET);
 
-      float gain1 = (amt1 * mod1) + (1 - amt1);
-      float gain2 = (amt2 * mod2) + (1 - amt2);
-      float gain3 = (amt3 * mod3) + (1 - amt3);
-
-      buf[i] = (gain1 * gain2 * gain3) * buf[i];
-
-      phase1 = fmodf(phase1 + step1, 1.0f);
-      phase2 = fmodf(phase2 + step2, 1.0f);
-      phase3 = fmodf(phase3 + step3, 1.0f);
+  for (int i=0; i<buffer.getNumSamples(); i++) {
+    
+    float mod1 = sinf(2 * M_PI * phase1) / 2.0f + .5; // 0..1
+    float mod2 = sinf(2 * M_PI * phase2) / 2.0f + .5; // 0..1
+    float mod3 = sinf(2 * M_PI * phase3) / 2.0f + .5; // 0..1
+    
+    float gain1 = (amt1 * mod1) + (1 - amt1);
+    float gain2 = (amt2 * mod2) + (1 - amt2);
+    float gain3 = (amt3 * mod3) + (1 - amt3);
+    float gain = (gain1 * gain2 * gain3) * dryWet + (1 - dryWet);
+    
+    for (int channel=0; channel<numInputChannels; channel++)
+    {
+      float *buf = buffer.getSampleData(channel);
+      buf[i] = gain * buf[i];
     }
+    
+    phase1 = fmodf(phase1 + step1, 1.0f);
+    phase2 = fmodf(phase2 + step2, 1.0f);
+    phase3 = fmodf(phase3 + step3, 1.0f);
   }
 }
 
@@ -94,7 +97,7 @@ float TripleTremolo::getParameterValue(int index){
 }
 
 void TripleTremolo::setParameterValue(int index, float value){
-//  if (index >= 0 && index < getNumParameters())
+  if (index >= 0 && index < getNumParameters())
     parameterValues[index] = value;
 }
 

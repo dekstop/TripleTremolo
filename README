@@ -1,0 +1,14 @@
+TripleTremolo AU Plugin
+=======================
+
+Three independent tremolo LFOs.
+ 
+TODO:
+* Parameter save/restore isn't working; no idea why.
+* ...
+
+Source at:
+https://github.com/dekstop/TripleTremolo
+
+Martin Dittus 2013-07-14
+@dekstop

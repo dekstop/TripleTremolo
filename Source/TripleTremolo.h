@@ -63,9 +63,8 @@ public:
   void prepareToPlay(double sampleRate, int samplesPerBlock);
   void processBlock(AudioSampleBuffer& buffer, int numInputChannels,
                     int numOutputChannels, MidiBuffer& midiMessages);
+  void reset();
   
-  float getFrequency(float p1);
-
   // Parameters
   const float getNumParameters(){return parameterNames.size();};
   const String getParameterName(int index);
@@ -77,6 +76,7 @@ public:
   void setStateInformation(ScopedPointer<XmlElement> state);
 
 private:
+  float getFrequency(float p1);
   void processChannelBlock(int size, float* buf, float* delayBuf, int delayBufIdx);
   
 private:

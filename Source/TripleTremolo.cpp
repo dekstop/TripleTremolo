@@ -75,6 +75,10 @@ void TripleTremolo::processBlock(AudioSampleBuffer& buffer, int numInputChannels
   }
 }
 
+void TripleTremolo::reset() {
+  phase1 = phase2 = phase3 = 0;
+}
+
 float TripleTremolo::getFrequency(float p1) {
   return p1*p1 * (MAX_FREQ-MIN_FREQ) + MIN_FREQ;
 }

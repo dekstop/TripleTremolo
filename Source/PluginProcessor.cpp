@@ -152,6 +152,13 @@ void TripleTremoloAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiB
     }
 }
 
+void TripleTremoloAudioProcessor::reset()
+{
+  // Use this method as the place to clear any delay lines, buffers, etc, as it
+  // means there's been a break in the audio's continuity.
+  tripleTremolo.reset();
+}
+
 //==============================================================================
 bool TripleTremoloAudioProcessor::hasEditor() const
 {

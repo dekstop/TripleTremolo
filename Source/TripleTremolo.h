@@ -38,7 +38,7 @@ enum ParameterId {
   PARAMETER_DRYWET
 };
 
-const float MIN_FREQ = 0.5;
+const float MIN_FREQ = 0.2;
 const float MAX_FREQ = 35;
 
 class TripleTremolo {
